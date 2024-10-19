@@ -1,0 +1,41 @@
+:root {
+    --main-color: #8967B3;
+}
+
+body {
+    background-color: var(--main-color);
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    text-align: center;
+}
+
+/* Main container */
+.container {
+    width: 60%;
+    margin: auto;
+    margin-top: 23vh;
+    padding: 20px;
+    border: 1px solid #F5EFFF; /* Delete this or give a blurred, pop up effect*/
+    box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(255, 255, 255, 0.19);
+    border-radius: 25px;
+}
+
+/* Scores */
+.scores {
+    display: flex;
+    justify-content: space-around;
+}
+
+/* Buttons */
+button {
+    background-color: var(--main-color);
+    border: None;
+    font-size: 100px;
+    padding: 10px;
+    margin: 20px;
+    cursor: pointer;
+}
+
+
+/* Messages */

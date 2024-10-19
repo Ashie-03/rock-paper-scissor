@@ -16,66 +16,70 @@ function getComputerChoice() {
 };
 
 // STEP - 3: Get human choice function 
-function getHumanChoice() {
-    // Get choice from user from user and convert to number
-    choice_number = parseInt(prompt("Select a number: \n1 = 'Rock' \n2 = 'Paper' \n3 = 'Scissor'"))
-    // Set the value for the number (Rock, Paper, Scissor) using conditionals and store in a variable "choice"
+
+function getHumanChoice(event) {
     let choice;
-    if (choice_number == 1) {
+    if (event.target.id == 'rock') {
         choice = "Rock"
-    } else if (choice_number == 2) {
+    } else if (event.target.id == 'paper') {
         choice = "Paper"
-    } else { //Any number other 1,2 will return this. 
+    } else if (event.target.id == 'scissor') { 
         choice = "Scissor"
-    };
-    // Return "choice" variable
+    }
     return choice;
 }
 
-// STEP - 4: Declare score variables
-let humanScore = 0;
-let computerScore = 0;
+// Declare score variables
+let H_Score = 0;
+let C_Score = 0;
+
+let message = document.querySelector('.messages');
 
 // STEP - 5: Play a round logic
 function playRound(humanChoice, computerChoice) {
+    let humanScore = document.querySelector('#humanScore');
+    let computerScore = document.querySelector('#computerScore');
     // Create conditionals to check who gets the point
     if (humanChoice === computerChoice) {
-        console.log(`Both selected ${humanChoice}. It's a draw`);
+        message.innerHTML = `Both selected ${humanChoice}. It's a draw`;
     } else if ((humanChoice == 'Rock' && computerChoice == 'Scissor') ||
         (humanChoice == 'Paper' && computerChoice == 'Rock') ||
         (humanChoice == 'Scissor' && computerChoice == 'Paper')) {
-        humanScore++;
-        console.log(`You win! ${humanChoice} beats ${computerChoice}`)
+        // add score for human
+        H_Score++;
+        humanScore.innerHTML = `Your Score: ${H_Score}`;
+        message.innerHTML = `You win! ${humanChoice} beats ${computerChoice}`;
     } else {
-        computerScore++;
-        console.log(`Computer wins! ${computerChoice} beats ${humanChoice}`)
+        // add score for computer
+        C_Score++;
+        computerScore.innerHTML = `Computer's Score: ${C_Score}`;
+        message.innerHTML = `Computer wins! ${computerChoice} beats ${humanChoice}`;
     };
 }
 
 // Step 6: Play 5 rounds logic
-function playGame() {
+function playGame(event) {
     // Create variables for choice
-    let humanSelection;
-    let computerSelection;
-
-    // For loop to play each round (5 times)
-    for (let i = 0; i < 5; i++) {
-        console.log(`Round ${i+1}`)
-        humanSelection = getHumanChoice();
-        computerSelection = getComputerChoice();
-        game = playRound(humanSelection,computerSelection)
-    }
+    let humanSelection = getHumanChoice(event);
+    console.log(humanSelection);
+    let computerSelection = getComputerChoice();
+    playRound(humanSelection,computerSelection)
 
     // Output the scores and check who wins (using conditionals)
-    console.log(`Scores \nHuman: ${humanScore}, Computer: ${computerScore}`);
-    if (humanScore > computerScore) {
-        console.log("You win!")
-    } else if (computerScore > humanScore) {
-        console.log("Computer wins!")
-    } else {
-        console.log("Match")
+    if (H_Score == 5) {
+        message.innerHTML = "Congratulations! You win!"
+        H_Score = 0;
+        C_Score = 0;
+        document.querySelector('#humanScore').innerHTML = 'Your Score: 0'
+        document.querySelector('#computerScore').innerHTML = 'Computer\'s Score: 0'
+    } else if (C_Score == 5) {
+        message.innerHTML = "Better luck next time! Computer wins!"
+        H_Score = 0;
+        C_Score = 0;
+        document.querySelector('#humanScore').innerHTML = 'Your Score: 0'
+        document.querySelector('#computerScore').innerHTML = 'Computer\'s Score: 0'
     }
 }
 
-game = playGame();
-console.log(game);
+let humanChoice = document.querySelector('.buttons');
+humanChoice.addEventListener('click', playGame);
